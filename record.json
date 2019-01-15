@@ -1,0 +1,13 @@
+{
+  "autoimporter": {
+    "userlist": "C:\\Temp\\UserList",
+    "server": "C:\\Temp\\Contract_Measurement"
+  },
+  "backup": {
+    "backup": "C:\\Demo_Data\\Contract_Measurement",
+    "failure": "C:\\Demo_Data\\Import_Failure"
+  },
+  "dfm": {
+    "userlist": "C:\\Server\\User_List.dfm"
+  }
+}

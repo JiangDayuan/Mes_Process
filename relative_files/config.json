@@ -1,0 +1,27 @@
+{
+  "autoimporter": {
+    "parent": [
+      "10.202.0.200",
+      "\\\\10.202.0.200\\shcc",
+      "shcc",
+      "Sh@12345"
+    ],
+    "userlist": "C:\\Temp\\UserList",
+    "server": "C:\\Temp\\Contract_Measurement"
+  },
+  "data": {
+    "parent": [
+      "10.202.0.200",
+      "\\\\10.202.0.200\\shcc",
+      "shcc",
+      "Sh@12345"
+    ],
+    "backup": "C:\\Demo_Data\\Contract_Measurement",
+    "temp": "C:\\Demo_Data\\Local_Temp",
+    "failure": "C:\\Demo_Data\\Import_Failure"
+  },
+  "server": {
+    "userlist": "C:\\Server\\User_List.dfm",
+    "main": "http://10.202.0.200:8088"
+  }
+}
