@@ -5,7 +5,7 @@ import json
 import sys
 import threading
 import shutil
-
+import argparse
 import logging
 
 from tkinter import *
@@ -247,6 +247,13 @@ def msel_change():
     msel_gen = piwebconfig('criteria.para')
     msel_gen.msel()
 
+def get_input_args():
+    parser = argparse.ArgumentParser(description='Retrieve some parameters')
+    #设置数据目录:
+    parser.add_argument('step', type=str,
+                        help='获取PiWeb输出的arguments')
+    return parser.parse_args()
+
 def assignment_data():
     """
     第一步：派工
@@ -336,8 +343,16 @@ def json_config():
     with open(r'relative_files\config.json', 'w') as j:
         json.dump(a, j, sort_keys=False, indent=2)
 
+def main():
+    in_arg = get_input_args()
+    if in_arg.step == 'assignment':
+        assignment_data()
+        #shutil.copyfile('assignment.para', r'temp\assignment.para')
+    else:
+        with open('test.txt','w') as t:
+            t.write(in_arg.step)
+
 if __name__ == "__main__":
-    assignment_data()
-    shutil.copyfile('assignment.para', r'temp\assignment.para')
+    main()
 
     pass
