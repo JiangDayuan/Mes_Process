@@ -6,6 +6,8 @@ import sys
 import threading
 import shutil
 
+import logging
+
 from tkinter import *
 import tkinter.filedialog
 import tkinter.messagebox
@@ -14,10 +16,15 @@ from subprocess import run
 #from tkinter import ttk
 
 class system_config():
+    """
+    1.获取程序运行的路径位置，并推导出其他常用路径的位置作为变量输出
+    2.获取config.json的配置信息
+    """
     CONFIG = 'config.json'
     #PARENT_FOLDER = 'Documents'#'Contract_Measurement_Process'
     def __init__(self):
         self.system_dir()
+        #config.json的路径
         self.config_dir = os.path.join(self.rela_dir, self.CONFIG)
 
     def system_dir(self):
@@ -56,24 +63,35 @@ class netaccess(system_config):
         self.data_pwd = self.data['parent'][3]
 
     def autoimporter_access(self):
+        """
+        1.检查Auto Importer使用的文件夹所在服务器的连接情况
+        2.使用用户名和密码登录该服务器
+        """
+        #ping一次地址的command
         ping_ai = 'Ping.exe -n 1 '+self.ai_ping
+        #运行command并返回状态信息
         status = run(ping_ai, shell=True)
         if 'returncode=0' not in str(status):
             warn = False
         else:
+            #ping通之后，使用用户名和密码登录服务器
             access = 'net use '+self.ai_dir+' /user:'+self.ai_user+' '+self.ai_pwd
-            run(access)
+            run(access, shell=True)
             warn = True
         return warn
 
     def fileserver_access(self):
+        """
+        1.检查文件服务器的连接情况
+        2.使用用户名和密码登录该服务器
+        """
         ping_server = 'Ping.exe -n 1 '+self.data_ping
         status = run(ping_server, shell=True)
         if 'returncode=0' not in str(status):
             warn = False
         else:
             access = 'net use '+self.data_dir+' /user:'+self.data_user+' '+self.data_pwd
-            os.system(access)
+            run(access, shell=True)
             warn = True
         return warn
 
@@ -173,15 +191,15 @@ class UI(Tk, system_config):
     def __init__(self):
         super().__init__()
         system_config.__init__(self)
+        #设置窗体参数：大小不可改变、长宽根据内容变化、使用ico
         self.resizable(0, 0)
         self.geometry()
         self.iconbitmap(os.path.join(self.rela_dir,'flow.ico'))
-        self.process = StringVar()
-        self.process.set("系统开始派工，请稍候...")
-        
+        self.process = StringVar()  #设置一个显示状态的动态变量
+
     def selectFile(self, path):
         """
-        Show selectPath into input box.
+        浏览选择一个文件
         """
         path__ = []
         path_ = tkinter.filedialog.askopenfilenames()
@@ -191,11 +209,15 @@ class UI(Tk, system_config):
         path.set(';'.join(path__))
 
     def ErrorShow(self):
+        """
+        出现一个显示错误信息的窗口
+        需要在调用之前修改self.process的内容作为报错内容
+        """
         self.title('错误信息')
         Label(self,text="",width=5,height=2).grid(row=0,column=0)
         Label(self,textvariable=self.process,width=40).grid(row=1,column=1)
         Label(self,text="",width=5,height=2).grid(row=2,column=2)
-        
+
     def UI_Create(self):
         self.report_path = StringVar()
         self.report_path.set("")
@@ -206,7 +228,7 @@ class UI(Tk, system_config):
         Button(self,text="浏览",command=lambda :self.selectFile(self.report_path), relief=GROOVE, width=6, height=1).grid(row=2,column=3,sticky=E)
         Label(self,text="",width=2).grid(row=2,column=4)
         Label(self,text="",width=2).grid(row=3,column=0)
-        
+
 
 def mkdir(path):
     if not os.path.exists(path):
@@ -226,33 +248,56 @@ def msel_change():
     msel_gen.msel()
 
 def assignment_data():
+    """
+    第一步：派工
+    """
+    logger = logging.getLogger('Assignment')
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler('test.log')
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
     try:
+        #将assignment.para转换成csv文件
         assign = piwebconfig('assignment.para')
         assign.csv_generate()
+        logger.info('assignment.para成功转换并保存为{}'.format(assign.csv_dir))
+        #检查Auto Importer使用的文件夹所在服务器的连接情况
         net = netaccess()
-        if net.autoimporter_access():
+        if True:#net.autoimporter_access():
+            #连接成功后，检查Auto Importer文件夹是否存在，不存在则创建
+            logger.info('({})网络连接成功'.format(net.ai_ping))
             mkdir(assign.ai['userlist'])
             mkdir(assign.ai['server'])
+            #将csv发送到Auto Importer文件夹
             shutil.copy(assign.csv_dir, assign.ai['userlist'])
+            logger.info('{}成功上传至{}'.format(assign.csv_dir, assign.ai['userlist']))
             shutil.copy(assign.csv_dir, assign.ai['server'])
+            logger.info('{}成功上传至{}'.format(assign.csv_dir, assign.ai['server']))
         else:
+            #如果连接不成功，则将csv复制到import failure文件夹
             mkdir(assign.data['failure'])
             shutil.copy(assign.csv_dir, os.path.join(assign.data['failure']))
+            #显示网络连接不成功的信息
+            logger.error("({})网络连接失败,请检查网络后再试".format(net.ai_ping))
             ui = UI()
             ui.process.set("({})网络连接失败,请检查网络后再试".format(net.ai_ping))
             ui.ErrorShow()
             ui.mainloop()
     except FileNotFoundError:
+        logger.error("没有检测到PiWeb生成的数据")
         ui = UI()
         ui.process.set("没有检测到PiWeb生成的数据")
         ui.ErrorShow()
         ui.mainloop()
     except shutil.Error as e:
+        logger.error('文件传输出现异常\n{}'.format(e))
         ui = UI()
         ui.process.set('文件传输出现异常\n{}'.format(e))
         ui.ErrorShow()
         ui.mainloop()
     except KeyError:
+        logger.error('PiWeb文件格式错误，不包含序列号信息')
         ui = UI()
         ui.process.set('PiWeb文件格式错误，不包含序列号信息')
         ui.ErrorShow()
@@ -294,4 +339,5 @@ def json_config():
 if __name__ == "__main__":
     assignment_data()
     shutil.copyfile('assignment.para', r'temp\assignment.para')
+
     pass
