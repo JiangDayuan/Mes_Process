@@ -3,15 +3,14 @@ import os
 import csv
 import json
 import sys
-import time
 import threading
 import shutil
-import traceback
 
 from tkinter import *
 import tkinter.filedialog
 import tkinter.messagebox
 from tkinter.filedialog import askdirectory
+from subprocess import run
 #from tkinter import ttk
 
 class system_config():
@@ -58,19 +57,19 @@ class netaccess(system_config):
 
     def autoimporter_access(self):
         ping_ai = 'Ping.exe -n 1 '+self.ai_ping
-        status = os.system(ping_ai)
-        if status != 0:
+        status = run(ping_ai, shell=True)
+        if 'returncode=0' not in str(status):
             warn = False
         else:
             access = 'net use '+self.ai_dir+' /user:'+self.ai_user+' '+self.ai_pwd
-            os.system(access)
+            run(access)
             warn = True
         return warn
 
     def fileserver_access(self):
         ping_server = 'Ping.exe -n 1 '+self.data_ping
-        status = os.system(ping_server)
-        if status != 0:
+        status = run(ping_server, shell=True)
+        if 'returncode=0' not in str(status):
             warn = False
         else:
             access = 'net use '+self.data_dir+' /user:'+self.data_user+' '+self.data_pwd
@@ -169,15 +168,16 @@ class piwebconfig(system_config):
                     if key != "fixture":
                         writer.writerow(["Probe_Info", key, value[2]])
 
-class UI(Tk):
+
+class UI(Tk, system_config):
     def __init__(self):
         super().__init__()
+        system_config.__init__(self)
         self.resizable(0, 0)
         self.geometry()
-        self.iconbitmap('flow.ico')
+        self.iconbitmap(os.path.join(self.rela_dir,'flow.ico'))
         self.process = StringVar()
         self.process.set("系统开始派工，请稍候...")
-        
         
     def selectFile(self, path):
         """
@@ -192,11 +192,9 @@ class UI(Tk):
 
     def ErrorShow(self):
         self.title('错误信息')
-        Label(self,text="",width=10,height=2).grid(row=0,column=0)
-        Label(self,text="",width=10).grid(row=1,column=0)
+        Label(self,text="",width=5,height=2).grid(row=0,column=0)
         Label(self,textvariable=self.process,width=40).grid(row=1,column=1)
-        Label(self,text="",width=10).grid(row=1,column=2)
-        Label(self,text="",width=10,height=2).grid(row=2,column=0)
+        Label(self,text="",width=5,height=2).grid(row=2,column=2)
         
     def UI_Create(self):
         self.report_path = StringVar()
@@ -208,11 +206,6 @@ class UI(Tk):
         Button(self,text="浏览",command=lambda :self.selectFile(self.report_path), relief=GROOVE, width=6, height=1).grid(row=2,column=3,sticky=E)
         Label(self,text="",width=2).grid(row=2,column=4)
         Label(self,text="",width=2).grid(row=3,column=0)
-        
-
-
-
-
         
 
 def mkdir(path):
@@ -232,7 +225,7 @@ def msel_change():
     msel_gen = piwebconfig('criteria.para')
     msel_gen.msel()
 
-def assignment_data(ui):
+def assignment_data():
     try:
         assign = piwebconfig('assignment.para')
         assign.csv_generate()
@@ -245,18 +238,22 @@ def assignment_data(ui):
         else:
             mkdir(assign.data['failure'])
             shutil.copy(assign.csv_dir, os.path.join(assign.data['failure']))
+            ui = UI()
             ui.process.set("({})网络连接失败,请检查网络后再试".format(net.ai_ping))
             ui.ErrorShow()
             ui.mainloop()
     except FileNotFoundError:
+        ui = UI()
         ui.process.set("没有检测到PiWeb生成的数据")
         ui.ErrorShow()
         ui.mainloop()
     except shutil.Error as e:
+        ui = UI()
         ui.process.set('文件传输出现异常\n{}'.format(e))
         ui.ErrorShow()
         ui.mainloop()
     except KeyError:
+        ui = UI()
         ui.process.set('PiWeb文件格式错误，不包含序列号信息')
         ui.ErrorShow()
         ui.mainloop()
@@ -268,7 +265,6 @@ def assignment_data(ui):
         if len(file_list) != 0:
             for file in file_list:
                 os.remove(os.path.join(temp_dir.para_dir, file))
-
 
 def json_config():
     a = {
@@ -296,8 +292,6 @@ def json_config():
         json.dump(a, j, sort_keys=False, indent=2)
 
 if __name__ == "__main__":
-    ui = UI()
-    assignment_data(ui)
-
+    assignment_data()
     shutil.copyfile('assignment.para', r'temp\assignment.para')
     pass
