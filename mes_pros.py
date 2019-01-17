@@ -7,6 +7,7 @@ import threading
 import shutil
 import argparse
 import logging
+import socket
 
 from tkinter import *
 import tkinter.filedialog
@@ -258,53 +259,53 @@ def assignment_data():
     """
     第一步：派工
     """
-    logger = logging.getLogger('Assignment')
-    logger.setLevel(logging.DEBUG)
+    logger1 = logging.getLogger('Assignment')
+    logger1.setLevel(logging.DEBUG)
     fh = logging.FileHandler('test.log')
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     fh.setFormatter(formatter)
-    logger.addHandler(fh)
+    logger1.addHandler(fh)
     try:
         #将assignment.para转换成csv文件
         assign = piwebconfig('assignment.para')
         assign.csv_generate()
-        logger.info('assignment.para成功转换并保存为{}'.format(assign.csv_dir))
+        logger1.info('assignment.para成功转换并保存为{}'.format(assign.csv_dir))
         #检查Auto Importer使用的文件夹所在服务器的连接情况
         net = netaccess()
         if True:#net.autoimporter_access():
             #连接成功后，检查Auto Importer文件夹是否存在，不存在则创建
-            logger.info('({})网络连接成功'.format(net.ai_ping))
+            logger1.info('({})网络连接成功'.format(net.ai_ping))
             mkdir(assign.ai['userlist'])
             mkdir(assign.ai['server'])
             #将csv发送到Auto Importer文件夹
             shutil.copy(assign.csv_dir, assign.ai['userlist'])
-            logger.info('{}成功上传至{}'.format(assign.csv_dir, assign.ai['userlist']))
+            logger1.info('{}成功上传至{}'.format(assign.csv_dir, assign.ai['userlist']))
             shutil.copy(assign.csv_dir, assign.ai['server'])
-            logger.info('{}成功上传至{}'.format(assign.csv_dir, assign.ai['server']))
+            logger1.info('{}成功上传至{}'.format(assign.csv_dir, assign.ai['server']))
         else:
             #如果连接不成功，则将csv复制到import failure文件夹
             mkdir(assign.data['failure'])
             shutil.copy(assign.csv_dir, os.path.join(assign.data['failure']))
             #显示网络连接不成功的信息
-            logger.error("({})网络连接失败,请检查网络后再试".format(net.ai_ping))
+            logger1.error("({})网络连接失败,请检查网络后再试".format(net.ai_ping))
             ui = UI()
             ui.process.set("({})网络连接失败,请检查网络后再试".format(net.ai_ping))
             ui.ErrorShow()
             ui.mainloop()
     except FileNotFoundError:
-        logger.error("没有检测到PiWeb生成的数据")
+        logger1.error("没有检测到PiWeb生成的数据")
         ui = UI()
         ui.process.set("没有检测到PiWeb生成的数据")
         ui.ErrorShow()
         ui.mainloop()
     except shutil.Error as e:
-        logger.error('文件传输出现异常\n{}'.format(e))
+        logger1.error('文件传输出现异常\n{}'.format(e))
         ui = UI()
         ui.process.set('文件传输出现异常\n{}'.format(e))
         ui.ErrorShow()
         ui.mainloop()
     except KeyError:
-        logger.error('PiWeb文件格式错误，不包含序列号信息')
+        logger1.error('PiWeb文件格式错误，不包含序列号信息')
         ui = UI()
         ui.process.set('PiWeb文件格式错误，不包含序列号信息')
         ui.ErrorShow()
@@ -344,15 +345,33 @@ def json_config():
         json.dump(a, j, sort_keys=False, indent=2)
 
 def main():
+    logger0 = logging.getLogger('Arguments')
+    logger0.setLevel(logging.DEBUG)
+    fh = logging.FileHandler('test.log')
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    logger0.addHandler(fh)
+    #开始读取Monitor传输的
     in_arg = get_input_args()
     if in_arg.step == 'assignment':
+        logger0.info("Argument获取正确，运行派工程序")
         assignment_data()
         #shutil.copyfile('assignment.para', r'temp\assignment.para')
+    elif in_arg.step == 'handover':
+        logger0.info("Argument获取正确，运行交接程序")
+        pass
+
     else:
-        with open('test.txt','w') as t:
-            t.write(in_arg.step)
+        logger0.error("Argument获取不正确: {}".format(in_arg.step))
+        ui = UI()
+        ui.process.set("Argument获取不正确: {}".format(in_arg.step))
+        ui.ErrorShow()
+        ui.mainloop()
 
 if __name__ == "__main__":
-    main()
-
+    #main()
+    hostname = socket.gethostname()
+    addrs = socket.getaddrinfo(hostname,None)
+    for item in addrs:
+        print(item)
     pass
