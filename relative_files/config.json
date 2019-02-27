@@ -1,8 +1,8 @@
 {
   "autoimporter": {
     "parent": [
-      "10.202.0.200",
-      "\\\\10.202.0.200\\shcc",
+      "10.202.0.9",
+      "\\\\10.202.0.9\\shcc",
       "shcc",
       "Sh@12345"
     ],
@@ -11,17 +11,19 @@
   },
   "data": {
     "parent": [
-      "10.202.0.200",
-      "\\\\10.202.0.200\\shcc",
+      "10.202.0.9",
+      "\\\\10.202.0.9\\shcc",
       "shcc",
       "Sh@12345"
     ],
     "backup": "C:\\Demo_Data\\Contract_Measurement",
     "temp": "C:\\Demo_Data\\Local_Temp",
-    "failure": "C:\\Demo_Data\\Import_Failure"
+    "failure": "C:\\Demo_Data\\Import_Failure",
+    "log": "C:\\Demo_Data\\Import_Failure"
   },
-  "server": {
+  "host": {
+    "ip": "10.202.0.9",
     "userlist": "C:\\Server\\User_List.dfm",
-    "main": "http://10.202.0.200:8088"
+    "main": "http://10.202.0.9:8888"
   }
 }
