@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<QdbSearchCriteriaFavorite Version="6.8.7.0">
+  <Name>JobNum&amp;TaskNum</Name>
+  <Description>► Job number = JOB190305185327
+► Task number = 1</Description>
+  <PageSearchCriteria>
+    <CommonSearchCriteria>
+      <SearchStrategy>ByAttribute</SearchStrategy>
+      <FilterConditions><AttributeConditionDescription SpecialOperation="Undefined" Operation="Equal" Value="2">
+  <Definition xsi:type="q1:AttributeDefinition" key="22253" description="Task number" queryEfficient="false" type="Integer" length="0" xmlns:q1="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</AttributeConditionDescription></FilterConditions>
+      <LastMeasurements>
+        <Count>10</Count>
+      </LastMeasurements>
+      <PrimaryMeasurementKeySettings>
+        <IsPrimaryMeasurementKeyOverwritten>False</IsPrimaryMeasurementKeyOverwritten>
+        <MergeCondition>None</MergeCondition>
+      </PrimaryMeasurementKeySettings>
+      <Settings>
+        <GroupByTimeSpan>
+          <Type>Days</Type>
+        </GroupByTimeSpan>
+        <GroupType>None</GroupType>
+        <SearchDeep>False</SearchDeep>
+      </Settings>
+      <ShowDeviationsSettings>
+        <IsActive>False</IsActive>
+        <ShowDeviationsMode>DeviationFromNominalValue</ShowDeviationsMode>
+      </ShowDeviationsSettings>
+      <SpecificSelection><SpecificAttributeConditionSearch SpecialOperation="Undefined" Operation="Equal" Value="JOB190305134616">
+  <Definition xsi:type="q1:AttributeDefinition" key="22250" description="Job number" queryEfficient="false" type="AlphaNumeric" length="25" xmlns:q1="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</SpecificAttributeConditionSearch><IsLimitingSearchResult>False</IsLimitingSearchResult></SpecificSelection>
+      <ShowMeasurementsOfAllParts>False</ShowMeasurementsOfAllParts>
+    </CommonSearchCriteria>
+  </PageSearchCriteria>
+</QdbSearchCriteriaFavorite>

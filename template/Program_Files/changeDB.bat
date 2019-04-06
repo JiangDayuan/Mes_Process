@@ -1,1 +1,0 @@
-"C:\Program Files\Zeiss\PiWeb\Cmdmon.exe" -open "..\Task_Assgin\Customer_List.ptx" -setDatabaseUrl "C:\Server\User_List.dfm" -keepFileMetadata -clientAuthenticationMode "NoneOrBasic"

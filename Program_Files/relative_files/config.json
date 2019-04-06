@@ -1,0 +1,28 @@
+{
+  "autoimporter": {
+    "parent": [
+      "10.202.0.9",
+      "\\\\10.202.0.9\\shcc",
+      "shcc",
+      "Sh@12345"
+    ],
+    "userlist": "C:\\Temp\\UserList",
+    "server": "C:\\Temp\\Contract_Measurement"
+  },
+  "data": {
+    "parent": [
+      "10.202.0.9",
+      "\\\\10.202.0.9\\shcc\\qFlow_Project\\File_Server",
+      "shcc",
+      "Sh@12345"
+    ],
+    "backup": "\\\\10.202.0.9\\shcc\\qFlow_Project\\File_Server",
+    "temp": "C:\\Demo_Data\\Local_Temp",
+    "failure": "C:\\Demo_Data\\Import_Failure",
+    "calypso": "C:\\Users\\Public\\Documents\\Zeiss\\CALYPSO\\workarea\\inspections"
+  },
+  "host": {
+    "ip": "10.202.120.59",
+    "main": "http://10.202.120.59:8888"
+  }
+}

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<QdbSearchCriteriaFavorite Version="6.8.7.0">
+  <Name>Last 100 measurements</Name>
+  <Description>Last 100 measurements
+► Job number = SH00000000000000</Description>
+  <PageSearchCriteria>
+    <CommonSearchCriteria>
+      <SearchStrategy>LastN</SearchStrategy>
+      <DateSearchCriteria Type="Framework:Zeiss.IMT.NGPS.Data.Qdb.MeasurementSearchCritieria.LastPeriodDateSearchCriteriaDescription">
+        <Interval>Weeks</Interval>
+        <LastNValue>1</LastNValue>
+        <ExcludeCurrentInterval>True</ExcludeCurrentInterval>
+        <BasedOnLastMeasurement>False</BasedOnLastMeasurement>
+      </DateSearchCriteria>
+      <FilterConditions><AttributeConditionDescription SpecialOperation="Undefined" Operation="Equal" Value="SH00000000000000">
+  <Definition xsi:type="q1:AttributeDefinition" key="22250" description="Job number" queryEfficient="false" type="AlphaNumeric" length="25" xmlns:q1="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</AttributeConditionDescription></FilterConditions>
+      <LastMeasurements>
+        <Count>100</Count>
+      </LastMeasurements>
+      <PrimaryMeasurementKeySettings>
+        <IsPrimaryMeasurementKeyOverwritten>False</IsPrimaryMeasurementKeyOverwritten>
+        <MergeCondition>None</MergeCondition>
+      </PrimaryMeasurementKeySettings>
+      <Settings>
+        <GroupByTimeSpan>
+          <Type>Days</Type>
+        </GroupByTimeSpan>
+        <GroupType>None</GroupType>
+        <SearchDeep>False</SearchDeep>
+      </Settings>
+      <ShowDeviationsSettings>
+        <IsActive>False</IsActive>
+        <ShowDeviationsMode>DeviationFromNominalValue</ShowDeviationsMode>
+      </ShowDeviationsSettings>
+      <SpecificSelection><SpecificAttributeConditionSearch SpecialOperation="Undefined" Operation="Equal" Value="">
+  <Definition xsi:type="q1:CatalogueAttributeDefinition" key="96" description="Approval" queryEfficient="false" catalogue="57b758ff-89a0-40eb-b21b-fe5780592e68" xmlns:q1="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</SpecificAttributeConditionSearch><IsLimitingSearchResult>False</IsLimitingSearchResult></SpecificSelection>
+      <ShowMeasurementsOfAllParts>False</ShowMeasurementsOfAllParts>
+    </CommonSearchCriteria>
+  </PageSearchCriteria>
+</QdbSearchCriteriaFavorite>

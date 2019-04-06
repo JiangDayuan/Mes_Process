@@ -1,0 +1,1 @@
+"C:\Program Files\Zeiss\PiWeb\Monitor.exe" -open "C:\Users\ZCFJIAN1\Documents\1_PiWeb_Projects\qFlowLab\Template\Self_Check\Self_Check.ptx" -initiallyCheckedGenericDataBindingPart "/Programs/Zeiss/8"

@@ -1,0 +1,8 @@
+protheadpara文件：
+u_TaskNumber,2
+u_JobNumber,JOB190301203341
+
+inspection文件：
+#u_JobNumber ' ->' 'JOB190301203341') 
+#(
+#u_TaskNumber ' ->' '2') 

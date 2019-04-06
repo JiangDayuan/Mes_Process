@@ -1,0 +1,873 @@
+{
+  "configuration": {
+    "partAttributes": [
+      {
+        "key": 1001,
+        "description": "Part number",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1002,
+        "description": "Part name",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1004,
+        "description": "Amendment status",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1011,
+        "description": "Variant",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1041,
+        "description": "Drawing number",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1101,
+        "description": "Department",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1103,
+        "description": "Cost center",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1301,
+        "description": "Company",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1342,
+        "description": "Inspection plan name",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1343,
+        "description": "Created",
+        "length": 0,
+        "type": "DateTime",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1344,
+        "description": "Created by",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1508,
+        "description": "Modified",
+        "length": 0,
+        "type": "DateTime",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1509,
+        "description": "Modified by",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 1900,
+        "description": "Comment",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 11097,
+        "description": "Address text",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 11098,
+        "description": "Address",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      }
+    ],
+    "characteristicAttributes": [
+      {
+        "key": 2001,
+        "description": "Characteristic number",
+        "length": 0,
+        "type": "Integer",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2006,
+        "description": "Control item",
+        "catalog": "9d5d42ed-bb99-418c-a725-bd1890e3b698",
+        "definitionType": "CatalogAttributeDefinition"
+      },
+      {
+        "key": 2008,
+        "description": "Group type",
+        "catalog": "8934f89a-d240-494c-b3f8-a1043e75367e",
+        "definitionType": "CatalogAttributeDefinition"
+      },
+      {
+        "key": 2022,
+        "description": "Decimal places",
+        "length": 0,
+        "type": "Integer",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2073,
+        "description": "Dimension of calibration master",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2080,
+        "description": "Characteristic status",
+        "length": 0,
+        "type": "Integer",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2097,
+        "description": "Address text",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2098,
+        "description": "Address",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2100,
+        "description": "Target value",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2101,
+        "description": "Nominal value",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2110,
+        "description": "Lower limit",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2111,
+        "description": "Upper limit",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2112,
+        "description": "Lower allowance",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2113,
+        "description": "Upper allowance",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2120,
+        "description": "Lower limit type",
+        "catalog": "73ef6655-20ec-4cb9-a5e8-1f7bcbe96b72",
+        "definitionType": "CatalogAttributeDefinition"
+      },
+      {
+        "key": 2121,
+        "description": "Upper limit type",
+        "catalog": "73ef6655-20ec-4cb9-a5e8-1f7bcbe96b72",
+        "definitionType": "CatalogAttributeDefinition"
+      },
+      {
+        "key": 2142,
+        "description": "Unit",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2201,
+        "description": "Process variation",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2342,
+        "description": "Module",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2404,
+        "description": "Gage resolution",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2504,
+        "description": "Change status",
+        "length": 0,
+        "type": "Integer",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2520,
+        "description": "Reference system",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2540,
+        "description": "Direction X",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2541,
+        "description": "Direction Y",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2542,
+        "description": "Direction Z",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2543,
+        "description": "Position X",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2544,
+        "description": "Position Y",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2545,
+        "description": "Position Z",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 8014,
+        "description": "Lower warning limit",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 8015,
+        "description": "Upper warning limit",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 12009,
+        "description": "Characteristic Specification",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 12010,
+        "description": "Characteristic type",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      }
+    ],
+    "measurementAttributes": [
+      {
+        "key": 4,
+        "description": "Time/Date",
+        "length": 0,
+        "type": "DateTime",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 5,
+        "description": "Event",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 8,
+        "description": "Operator",
+        "catalog": "8c376bee-ffe3-4ee4-abb9-a55b492e69ad",
+        "definitionType": "CatalogAttributeDefinition"
+      },
+      {
+        "key": 9,
+        "description": "Text",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 12,
+        "description": "CMM Type",
+        "catalog": "b507033b-5991-47f5-b18c-d4a560b35677",
+        "definitionType": "CatalogAttributeDefinition"
+      },
+      {
+        "key": 14,
+        "description": "Part ident",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 30,
+        "description": "Comment:",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 53,
+        "description": "Order number",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 96,
+        "description": "Approval",
+        "catalog": "57b758ff-89a0-40eb-b21b-fe5780592e68",
+        "definitionType": "CatalogAttributeDefinition"
+      },
+      {
+        "key": 1062,
+        "description": "Customer",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 10020,
+        "description": "Run",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 10030,
+        "description": "Software",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 10031,
+        "description": "Software revision",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 10096,
+        "description": "Measurement number",
+        "length": 0,
+        "type": "Integer",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 20001,
+        "description": "JobNumber",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 20002,
+        "description": "TaskNumber",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 20003,
+        "description": "User",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 20004,
+        "description": "MachiningEquipment",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 20005,
+        "description": "Batch No.",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 20006,
+        "description": "Customer",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      }
+    ],
+    "valueAttributes": [
+      {
+        "key": 1,
+        "description": "Measured value",
+        "length": 0,
+        "type": "Float",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 2,
+        "description": "Comment",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 3,
+        "description": "Order",
+        "length": 0,
+        "type": "Integer",
+        "definitionType": "AttributeDefinition"
+      }
+    ],
+    "catalogAttributes": [
+      {
+        "key": 4072,
+        "description": "CMM No.",
+        "length": 20,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 4073,
+        "description": "CMM Type",
+        "length": 100,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 4074,
+        "description": "Device Group",
+        "length": 20,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 4092,
+        "description": "Operator number",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 4093,
+        "description": "Operator name",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 4230,
+        "description": "Result",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 4300,
+        "description": "Group type",
+        "length": 20,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 4320,
+        "description": "Approval",
+        "length": 255,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 4527,
+        "description": "Yes/No",
+        "length": 10,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      },
+      {
+        "key": 12120,
+        "description": "Limit type",
+        "length": 20,
+        "type": "AlphaNumeric",
+        "definitionType": "AttributeDefinition"
+      }
+    ],
+    "versioningType": "Off"
+  },
+  "catalogs": [
+    {
+      "validAttributes": [
+        4320
+      ],
+      "catalogEntries": [
+        {
+          "attributes": {
+            "4320": "n.def."
+          },
+          "key": 0
+        },
+        {
+          "attributes": {
+            "4320": "Approved"
+          },
+          "key": 1
+        },
+        {
+          "attributes": {
+            "4320": "Blocked"
+          },
+          "key": 2
+        }
+      ],
+      "uuid": "57b758ff-89a0-40eb-b21b-fe5780592e68",
+      "name": "Measurement status catalog"
+    },
+    {
+      "validAttributes": [
+        4092,
+        4093
+      ],
+      "catalogEntries": [
+        {
+          "attributes": {
+            "4092": "n.def.",
+            "4093": "n.def."
+          },
+          "key": 0
+        },
+        {
+          "attributes": {
+            "4093": "Master"
+          },
+          "key": 1
+        }
+      ],
+      "uuid": "8c376bee-ffe3-4ee4-abb9-a55b492e69ad",
+      "name": "Operator catalog"
+    },
+    {
+      "validAttributes": [
+        4527
+      ],
+      "catalogEntries": [
+        {
+          "attributes": {
+            "4527": "n.def."
+          },
+          "key": 0
+        },
+        {
+          "attributes": {
+            "4527": "Yes"
+          },
+          "key": 1
+        },
+        {
+          "attributes": {
+            "4527": "No"
+          },
+          "key": 2
+        }
+      ],
+      "uuid": "9d5d42ed-bb99-418c-a725-bd1890e3b698",
+      "name": "Yes/No catalog"
+    },
+    {
+      "validAttributes": [
+        12120
+      ],
+      "catalogEntries": [
+        {
+          "attributes": {
+            "12120": "n.def."
+          },
+          "key": 0
+        },
+        {
+          "attributes": {
+            "12120": "Limit value"
+          },
+          "key": 1
+        },
+        {
+          "attributes": {
+            "12120": "natural limit"
+          },
+          "key": 2
+        }
+      ],
+      "uuid": "73ef6655-20ec-4cb9-a5e8-1f7bcbe96b72",
+      "name": "Limit type catalog"
+    },
+    {
+      "validAttributes": [
+        4300
+      ],
+      "catalogEntries": [
+        {
+          "attributes": {
+            "4300": "n.def."
+          },
+          "key": 0
+        },
+        {
+          "attributes": {
+            "4300": "No group"
+          },
+          "key": 1
+        },
+        {
+          "attributes": {
+            "4300": "Logical group"
+          },
+          "key": 2
+        }
+      ],
+      "uuid": "8934f89a-d240-494c-b3f8-a1043e75367e",
+      "name": "Group catalog"
+    },
+    {
+      "validAttributes": [
+        4230
+      ],
+      "catalogEntries": [
+        {
+          "attributes": {
+            "4230": "n.def."
+          },
+          "key": 0
+        },
+        {
+          "attributes": {
+            "4230": "OK"
+          },
+          "key": 1
+        },
+        {
+          "attributes": {
+            "4230": "n. OK"
+          },
+          "key": 2
+        }
+      ],
+      "uuid": "835a5b81-47b0-459f-a218-f5e23d5d8bc3",
+      "name": "Result catalog"
+    },
+    {
+      "validAttributes": [
+        4072,
+        4073,
+        4074
+      ],
+      "catalogEntries": [
+        {
+          "attributes": {
+            "4072": "n.def.",
+            "4073": "n.def.",
+            "4074": "n.def."
+          },
+          "key": 0
+        },
+        {
+          "attributes": {
+            "4072": "000000",
+            "4073": "Prismo",
+            "4074": "Simulation"
+          },
+          "key": 1
+        }
+      ],
+      "uuid": "b507033b-5991-47f5-b18c-d4a560b35677",
+      "name": "CMM Type"
+    }
+  ],
+  "source": {
+    "encryptedCredentials": null,
+    "path": [],
+    "CertificateThumbPrint": null,
+    "RefreshToken": null,
+    "url": "",
+    "name": null,
+    "part": "/",
+    "authenticationMode": "None",
+    "user": null,
+    "password": null
+  },
+  "destination": {
+    "encryptedCredentials": null,
+    "path": [
+      {
+        "value": "${K1062}"
+      },
+      {
+        "value": "${K1002}"
+      }
+    ],
+    "CertificateThumbPrint": null,
+    "RefreshToken": null,
+    "url": "http://10.202.120.59:8888",
+    "name": "qFlow Lab",
+    "part": "P:/Programs/",
+    "authenticationMode": "None",
+    "user": null,
+    "password": null
+  },
+  "HasDuplicateDestinationAttributes": false,
+  "extendExistingMeasurementsKeys": [],
+  "mapping": [
+    {
+      "CatalogMappings": [],
+      "SourceCatalogAttributes": [],
+      "DestinationCatalogAttribute": null,
+      "DestinationKey": null,
+      "SourceKey": 8
+    },
+    {
+      "CatalogMappings": [],
+      "SourceCatalogAttributes": [],
+      "DestinationCatalogAttribute": null,
+      "DestinationKey": 22037,
+      "SourceKey": 1062
+    },
+    {
+      "CatalogMappings": [],
+      "SourceCatalogAttributes": [],
+      "DestinationCatalogAttribute": null,
+      "DestinationKey": null,
+      "SourceKey": 10096
+    },
+    {
+      "CatalogMappings": [],
+      "SourceCatalogAttributes": [],
+      "DestinationCatalogAttribute": null,
+      "DestinationKey": 22250,
+      "SourceKey": 20001
+    },
+    {
+      "CatalogMappings": [],
+      "SourceCatalogAttributes": [],
+      "DestinationCatalogAttribute": null,
+      "DestinationKey": 22253,
+      "SourceKey": 20002
+    },
+    {
+      "CatalogMappings": [],
+      "SourceCatalogAttributes": [],
+      "DestinationCatalogAttribute": null,
+      "DestinationKey": 8,
+      "SourceKey": 20003
+    },
+    {
+      "CatalogMappings": [],
+      "SourceCatalogAttributes": [],
+      "DestinationCatalogAttribute": null,
+      "DestinationKey": 10,
+      "SourceKey": 20004
+    },
+    {
+      "CatalogMappings": [],
+      "SourceCatalogAttributes": [],
+      "DestinationCatalogAttribute": null,
+      "DestinationKey": 6,
+      "SourceKey": 20005
+    },
+    {
+      "CatalogMappings": [],
+      "SourceCatalogAttributes": [],
+      "DestinationCatalogAttribute": null,
+      "DestinationKey": null,
+      "SourceKey": 20006
+    }
+  ],
+  "values": [],
+  "catalogSettings": [],
+  "autoSync ": false,
+  "enableVersioning ": false,
+  "createInspectionPlan": true,
+  "updateInspectionPlan": true,
+  "synchronizePartRawData": true,
+  "synchronizeSubparts": false,
+  "synchronizeCharacteristicRawData": true,
+  "synchronizeMeasurementRawData": true,
+  "synchronizeMeasurementValueRawData": true,
+  "aggregationMeasurementSelection": "Measurements",
+  "measurementSearchCondition": null
+}

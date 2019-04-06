@@ -1,0 +1,1 @@
+"C:\Program Files\Zeiss\PiWeb\Monitor.exe" -open "Self_Check.ptx" -initiallyCheckedGenericDataBindingPart "/Programs/ZEISS/8/"
