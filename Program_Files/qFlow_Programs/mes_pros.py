@@ -898,7 +898,8 @@ def filter_key_parser(filterkey):
     for key in key_list:
         keys = str(key.split('=')[0].strip())
         value = str(key.split('=')[1].strip())
-        key_data[keys] = value
+        if value != '':
+            key_data[keys] = value
     return key_data
 
 def mesl_making(key_data):
@@ -914,7 +915,8 @@ def mesl_making(key_data):
                     '22250':r'  <Definition xsi:type="q3:AttributeDefinition" key="22250" description="Job number" queryEfficient="false" type="AlphaNumeric" length="25" xmlns:q3="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />',
                     '22253':r'  <Definition xsi:type="q4:AttributeDefinition" key="22253" description="Task number" queryEfficient="false" type="Integer" length="0" xmlns:q4="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />',
                     '22200':r'  <Definition xsi:type="q5:AttributeDefinition" key="22200" description="Inspection name" queryEfficient="false" type="AlphaNumeric" length="200" xmlns:q5="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />',
-                    '96':r'  <Definition xsi:type="q6:CatalogueAttributeDefinition" key="96" description="Approval" queryEfficient="false" catalogue="57b758ff-89a0-40eb-b21b-fe5780592e68" xmlns:q6="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />'
+                    '96':r'  <Definition xsi:type="q6:CatalogueAttributeDefinition" key="96" description="Approval" queryEfficient="false" catalogue="57b758ff-89a0-40eb-b21b-fe5780592e68" xmlns:q6="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />',
+                    '9':r'  <Definition xsi:type="q1:AttributeDefinition" key="9" description="Text" queryEfficient="false" type="AlphaNumeric" length="255" xmlns:q1="http://www.daimlerchrysler.com/DataService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />'
                     }
     with codecs.open(master_dir, 'r', 'utf8') as master:
         with codecs.open(search_dir, 'w', 'utf8') as search:
@@ -1102,7 +1104,7 @@ def job_assignment(log_path):
             # 设置当前时间
             current_time = datetime.datetime.now()
             change_time = current_time + datetime.timedelta(hours=-8)
-            assign.txt_data['4'] = change_time.strftime('%Y-%m-%dT%H:%M:%SZ')
+            assign.txt_data['22257'] = change_time.strftime('%Y-%m-%dT%H:%M:%SZ')
             # 写入数据库
             API = PiWebAPI(net.host['main'])
             API.CreateNewMeasurement(assign.txt_data, partPath='/Process/Job_Management/')
@@ -1302,6 +1304,37 @@ def job_publish(log_path):
             partPath = '/Process/Job_Management/'
             mes_data = {'22251': 1}
             API = PiWebAPI(net.host['main'])
+            #############################
+            # 获取现有的task number
+            API.GetMeasurementAttribute(getattribute=['22253'], partPath=partPath, serCon=serCon)
+            task_number_list = [int(p) for p in API.MeaAtt['22253']]
+            # 对现有task number进行排序
+            task_number_list.sort()
+            # 检查是否有跳开的task number
+            right_order = 0
+            new_order = {}
+            for task_number in task_number_list:
+                right_order += 1
+                if task_number != right_order:
+                    new_order[task_number] = right_order
+            # 如果顺序不正确，恢复正确顺序
+            if len(new_order) != 0:
+                for key, value in new_order.items():
+                    task_data = ({'22253':value})
+                    API.UpdateMeasurement(task_data, partPath=partPath, serCon='22250In[{}]%2B22253In[{}]'.format(job_number, key))
+                    if API.GET_code == 200:
+                        logger1.info("成功获取数据库信息")
+                        if API.Mes_PUT_code == 200:
+                            logger1.info("成功修改工件{} {}".format(job_number, key))
+                        elif API.Mes_PUT_code == 300:
+                            logger1.warn(API.Mes_PUT_text)
+                        else:
+                            logger1.error(API.Mes_PUT_text)
+                            showError("Status Code: PUT {} 详细信息请查看log文件".format(API.Mes_PUT_code))
+                    else:
+                        logger1.error(API.GET_Text)
+                        showError("Status Code: GET {} 详细信息请查看log文件".format(API.GET_code))
+            #############################
             API.UpdateMeasurement(mes_data, partPath=partPath, serCon=serCon)
             if API.GET_code == 200:
                 logger1.info("成功获取数据库信息")
@@ -1405,8 +1438,8 @@ def inspection_download(log_path, rela_dir, source_dir, target_dir, base_dir, in
         # userfield.ini的本地存储位置
         userfield = os.path.join(calypso, r'protocol\protform\userfields.ini')
         # out.sconf的本地存储位置
-        user_name = getpass.getuser()
-        out = os.path.join(r'C:\Users', user_name, r'out.sconf')
+        # user_name = getpass.getuser()
+        # out = os.path.join(r'C:\Users', user_name, r'out.sconf')
         # startfile的本地存储位置
         startfile = os.path.join(target_dir, r'startfile')
         # 设置来源文件的位置
@@ -1420,9 +1453,9 @@ def inspection_download(log_path, rela_dir, source_dir, target_dir, base_dir, in
             os.remove(userfield)
         shutil.copyfile(os.path.join(rela_ins_dir, 'userfields.ini'), userfield)
         # 从系统中复制标准out.sconf到用户文件夹中
-        if os.path.exists(out):
+        '''if os.path.exists(out):
             os.remove(out)
-        shutil.copyfile(os.path.join(rela_ins_dir, 'out.sconf'), out)
+        shutil.copyfile(os.path.join(rela_ins_dir, 'out.sconf'), out)'''
         # 修改startfile
         startfile_list = []
         with open(startfile, 'r') as start:
@@ -1456,15 +1489,13 @@ def inspection_download(log_path, rela_dir, source_dir, target_dir, base_dir, in
             if os.path.exists(inspection_start):
                 os.remove(inspection_start)
             with open(inspection_start, 'w') as start:
-                start.writelines('@echo off\ncd \"{}\"\n'.format(machine_interface_dir))
-                start.writelines('start MachineInterface.exe Start')
+                start.writelines('@echo off\nstart "" "{}" {}'.format(os.path.join(machine_interface_dir, 'MachineInterface.exe'), 'Start'))
             # 复制report_end.bat文件
             report_end = os.path.join(inspection, 'report_end.bat')
             if os.path.exists(report_end):
                 os.remove(report_end)
             with open(report_end, 'w') as start:
-                start.writelines('@echo off\ncd \"{}\"\n'.format(machine_interface_dir))
-                start.writelines('start MachineInterface.exe Stop')
+                start.writelines('@echo off\nstart "" "{}" {}'.format(os.path.join(machine_interface_dir, 'MachineInterface.exe'), 'Stop'))
             # 设置prothead参数
             customer = download.txt_data['22037']
             u_User = download.txt_data['8']
@@ -1540,6 +1571,8 @@ def inspection_download(log_path, rela_dir, source_dir, target_dir, base_dir, in
         showError('运行出现错误，详情请查看log文件')
     else:
         showInfo("测量程序加载成功，请在测量软件中选择测量程序")
+    finally:
+        load_ui.destroy()
 
 def create_new_part(log_path, mes_data):
     # 设置logger
@@ -2338,10 +2371,12 @@ def main():
     # 预派工
     elif in_arg.step == 'assign':
         logger0.info("Argument:'{}'获取正确，运行派工程序".format(in_arg.step))
+        catalog_transfer('assignment.para')
         job_assignment(log_path)
     # 修改测量任务
     elif in_arg.step == 'adjust':
         logger0.info("Argument:'{}'获取正确，运行测量任务修改程序".format(in_arg.step))
+        catalog_transfer('adjustment.para')
         job_adjustment(log_path)
     # 删除测量工单
     elif in_arg.step == 'delete':
@@ -2523,7 +2558,36 @@ def main():
             partPath = decode_url(in_arg.partPath)
             serCon = decode_url(in_arg.serCon)
             compareSerCon = decode_url(in_arg.compareSerCon)
-            approve_measurement(log_path, checkPartPath, checkSerCon, in_arg.duplicatekey, in_arg.update, partPath, serCon, compareSerCon, in_arg.jobStatus)
+            go_status = approve_measurement(log_path, checkPartPath, checkSerCon, in_arg.duplicatekey, in_arg.update, partPath, serCon, compareSerCon, in_arg.jobStatus)
+            if go_status == 'go':
+                inspection = piwebconfig('task_conclusion.para')
+                equiptment = inspection.txt_data['8']
+                net = netaccess()
+                API = PiWebAPI(net.host['main'])
+                serCon = '8In[Machine]'
+                partPath = '/Process/Equipment/{}/'.format(equiptment)
+                logger0.info('partPath='+partPath)
+                API.UpdateMeasurement(mes_data={'22036':'Available'}, partPath=partPath, serCon=serCon)
+
+    # 发布测量结果时，检查测量结果是否有重复或未发布项目
+    elif in_arg.step == 'closejob':
+        if in_arg.duplicatekey == None:
+            logger0.error('未输入duplicatekey参数')
+            showError('未输入duplicatekey参数')
+        else:
+            checkPartPath = decode_url(in_arg.checkPartPath)
+            checkSerCon = decode_url(in_arg.checkSerCon)
+            partPath = decode_url(in_arg.partPath)
+            serCon = decode_url(in_arg.serCon)
+            compareSerCon = decode_url(in_arg.compareSerCon)
+            go_status = approve_measurement(log_path, checkPartPath, checkSerCon, in_arg.duplicatekey, in_arg.update, partPath, serCon, compareSerCon, in_arg.jobStatus)
+            if go_status == 'go':
+                current_time = datetime.datetime.now()
+                change_time = current_time + datetime.timedelta(hours=-8)
+                time_str = change_time.strftime('%Y-%m-%dT%H:%M:%SZ')
+                net = netaccess()
+                API = PiWebAPI(net.host['main'])
+                API.UpdateMeasurement(mes_data={'4':time_str}, partPath=partPath, serCon=serCon)
     # 工程师传递复测信息
     elif in_arg.step == 'remeasurement':
         checkPartPath = decode_url(in_arg.checkPartPath)
